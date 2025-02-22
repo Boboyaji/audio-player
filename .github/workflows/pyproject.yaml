@@ -1,0 +1,135 @@
+name: modern-music-player
+version: 1.0.0
+
+# Environment configuration
+environment:
+  python_version: ">=3.7"
+  platforms:
+    - windows
+    - macos
+    - linux
+
+# Project metadata
+metadata:
+  description: "A modern music player application with advanced features"
+  author: "Your Name"
+  license: "MIT"
+  repository: "https://github.com/yourusername/modern-music-player"
+
+# Dependencies
+dependencies:
+  python:
+    runtime:
+      - PyQt6>=6.4.0
+      - mutagen>=1.45.1
+      - pathlib>=1.0.1
+    development:
+      - pytest>=7.0.0
+      - black>=22.3.0
+      - flake8>=4.0.1
+      - mypy>=0.950
+      - pyinstaller>=5.0.0
+
+# Build configuration
+build:
+  entry_point: src/main.py
+  output_dir: dist/
+  pyinstaller:
+    windows:
+      icon: assets/icons/player.ico
+      one_file: true
+      windowed: true
+    macos:
+      icon: assets/icons/player.icns
+      one_file: true
+      windowed: true
+    linux:
+      icon: assets/icons/player.png
+      one_file: true
+      windowed: true
+
+# Project structure
+structure:
+  directories:
+    - src/
+    - src/ui/
+    - src/utils/
+    - src/models/
+    - tests/
+    - assets/
+    - assets/icons/
+    - docs/
+
+# Testing configuration
+testing:
+  pytest:
+    test_dir: tests/
+    coverage:
+      minimum: 80
+      exclude:
+        - tests/*
+        - setup.py
+
+# Documentation
+documentation:
+  format: markdown
+  files:
+    - README.md
+    - CONTRIBUTING.md
+    - LICENSE
+    - docs/installation.md
+    - docs/usage.md
+
+# CI/CD Pipeline
+ci_cd:
+  github_actions:
+    triggers:
+      - push:
+          branches: [main, develop]
+      - pull_request:
+          branches: [main]
+    steps:
+      - lint:
+          tools: [flake8, black, mypy]
+      - test:
+          command: pytest
+      - build:
+          platforms: [windows, macos, linux]
+      - deploy:
+          condition: tag IS present
+
+# Application settings
+settings:
+  defaults:
+    volume: 50
+    theme: dark
+    supported_formats:
+      - .mp3
+      - .wav
+      - .ogg
+      - .flac
+      - .m4a
+      - .aac
+    window:
+      width: 900
+      height: 600
+      min_width: 800
+      min_height: 500
+
+# Development tools configuration
+development:
+  format:
+    line_length: 88
+    quote_style: double
+  lint:
+    flake8:
+      max_line_length: 88
+      exclude:
+        - .git
+        - __pycache__
+        - build
+        - dist
+  type_checking:
+    mypy:
+      python_version: "3.7"
+      strict: true
